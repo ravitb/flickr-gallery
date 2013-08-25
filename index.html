@@ -21,7 +21,7 @@
     <header>
         <h1>Hello Feeders!</h1>
         <section>
-          <form id="search-query">
+          <form id="search">
             <label for="rss-link"></label>
             <input type="text" id="rss-input" name="rss-input" value="" placeholder="Input rss link" autofocus />
             <!-- <button>Fetch RSS!</button> -->
@@ -41,24 +41,40 @@
     </script>
     <script type="text/javascript">
 
-      // flickr-gallery
+      // "flickr-gallery"
       // Key:
       // a8ece672e0d9b4de09ea7ac9fb267a8b
 
       // Secret:
       // dcfb4418dfbefc7a
-      $(function() {
-          var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags=dog&per_page=50";
-          var src;
-          $.getJSON(url + "&format=json&jsoncallback=?", function(data){
+      var flickr = (function(){
+          return {
+
+            search: function(query){
+              var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags=dog&per_page=50",
+                  src;
+              $.getJSON(url + "&format=json&jsoncallback=?", function(data){
+                  this.display(data);
+              });
+            },
+            display: function(data){
               $.each(data.photos.photo, function(i,item){
                   src = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
                   console.log(src);
                   $("<img/>").attr("src", src).appendTo("#images");
                   if ( i == 3 ) return false;
               });
-            console.log(data.photos.photo);
-          });
+              console.log(data.photos.photo);
+            }
+          }
+      })();
+
+      $(function() {
+        console.log('flickr', flickr);
+        $('#search').on('submit', function(e){
+          e.preventDefault();
+          console.log('submit', this, $('#search input').val());
+        });
       });
     </script> 
   </body>
