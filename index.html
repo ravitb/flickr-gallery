@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> -->
+
+    <link type="text/css" rel="stylesheet" href="style/main.css"/>
+    <style type="text/css">
+      body > header {
+        height: 150px;
+        background-color: #343434;
+        color: #fff;
+        padding: 25px 50px;
+      }
+      body > header input {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+        <h1>Hello Feeders!</h1>
+        <section>
+          <form id="search-query">
+            <label for="rss-link"></label>
+            <input type="text" id="rss-input" name="rss-input" value="" placeholder="Input rss link" autofocus />
+            <!-- <button>Fetch RSS!</button> -->
+          </form>
+        <section>
+    </header>
+    <nav></nav>
+    <section>
+      <div id="images"></div>
+    </section>
+    <footer></footer>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+    <script>
+      if (!window.jQuery) {
+          document.write('<script src="javascript/jquery-2.0.3.min.js"><\/script>');
+      }
+    </script>
+    <script type="text/javascript">
+
+      // flickr-gallery
+      // Key:
+      // a8ece672e0d9b4de09ea7ac9fb267a8b
+
+      // Secret:
+      // dcfb4418dfbefc7a
+      $(function() {
+          var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags=dog&per_page=50";
+          var src;
+          $.getJSON(url + "&format=json&jsoncallback=?", function(data){
+              $.each(data.photos.photo, function(i,item){
+                  src = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
+                  console.log(src);
+                  $("<img/>").attr("src", src).appendTo("#images");
+                  if ( i == 3 ) return false;
+              });
+            console.log(data.photos.photo);
+          });
+      });
+    </script> 
+  </body>
+</html>
