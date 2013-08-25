@@ -23,7 +23,7 @@
         <section>
           <form id="search">
             <label for="rss-link"></label>
-            <input type="text" id="rss-input" name="rss-input" value="" placeholder="Input rss link" autofocus />
+            <input type="text" id="query" name="query" value="" placeholder="It's now or never" autofocus />
             <!-- <button>Fetch RSS!</button> -->
           </form>
         <section>
@@ -54,7 +54,7 @@
               var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags=dog&per_page=50",
                   src;
               $.getJSON(url + "&format=json&jsoncallback=?", function(data){
-                  this.display(data);
+                  flickr.display(data);
               });
             },
             display: function(data){
@@ -73,7 +73,8 @@
         console.log('flickr', flickr);
         $('#search').on('submit', function(e){
           e.preventDefault();
-          console.log('submit', this, $('#search input').val());
+          console.log('submit', this, $('#query').val());
+          flickr.search( $('#query').val());
         });
       });
     </script> 
