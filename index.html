@@ -30,50 +30,51 @@
         height: 200px;
         overflow: hidden;
         margin: 8px;
-        -webkit-perspective: 1000px;
-           -moz-perspective: 1000px;
-            -ms-perspective: 1000px;
-                perspective: 1000px;
+        border: 1px solid #CCC;
+        -webkit-perspective: 800px;
+           -moz-perspective: 800px;
+            -ms-perspective: 800px;
+             -o-perspective: 800px;
+                perspective: 800px;
       }
-      .container .card {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        -webkit-transform-style: preserve-3d;
-           -moz-transform-style: preserve-3d;
-             ms-transform-style: preserve-3d;
-                transform-style: preserve-3d;
+      .container .card { 
+        -webkit-transition: -webkit-transform 1s;
+              -moz-transition: -moz-transform 1s;
+                  -o-transition: -o-transform 1s;
+                        transition: transform 1s;
 
-        -webkit-transform:      transform 1s;
-           -moz-transform:      transform 1s;
-            -ms-transform:      transform 1s;
-                transform:      transform 1s;
+            -webkit-transform-style: preserve-3d;
+               -moz-transform-style: preserve-3d;
+                 -o-transform-style: preserve-3d;
+                    transform-style: preserve-3d;
+      }
+      .container .card.flipped {
+        -webkit-transform: rotateY( 180deg );
+           -moz-transform: rotateY( 180deg );
+            -ms-transform: rotateY( 180deg );
+             -o-transform: rotateY( 180deg );
+                transform: rotateY( 180deg );
       }
       .card figure {
         display: block;
         position: absolute;
-        width: 100%;
-        height: 100%;
-        -webkit-backface-visibility:hidden; /* Chrome and Safari */
-           -moz-backface-visibility:hidden; /* Firefox */
-            -ms-backface-visibility:hidden; /* Internet Explorer */
-                backface-visibility:hidden;
-      }
-      #card .front {
-        background: red;
+        width: 200px;
+        height: 260px;
+        margin: 0;
+        -webkit-backface-visibility: hidden;
+           -moz-backface-visibility: hidden;
+             -o-backface-visibility: hidden;
+                backface-visibility: hidden;
       }
       .card .back {
-        background: #000;
-        -webkit-transform: rotateY(180deg);
-           -moz-transform: rotateY(180deg);
-            -ms-transform: rotateY(180deg);
-                transform: rotateY(180deg);
+        background: #ffff00;
       }
-      .card.flipped {
-        -webkit-transform: rotateY(180deg);
-           -moz-transform: rotateY(180deg);
-            -ms-transform: rotateY(180deg);
-                transform: rotateY(180deg);
+      .card .front {
+        -webkit-transform: rotateY( 180deg );
+           -moz-transform: rotateY( 180deg );
+            -ms-transform: rotateY( 180deg );
+             -o-transform: rotateY( 180deg );
+                transform: rotateY( 180deg );
       }
       .container .center-image {
         display: inline-block;
@@ -122,7 +123,7 @@
           return {
 
             search: function(query){
-              var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags="+ query +"&per_page=10";
+              var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags="+ query +"&per_page=25";
               $.getJSON(url + "&format=json&jsoncallback=?", function(data){
                   flickr.display(data);
               });
@@ -134,13 +135,13 @@
               $.each(data.photos.photo, function(i,item){
                   src = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
                   element = $('<section class="container">' +
-                                '<div class="card">' +
-                                '<figure class="back"></figure>' +
+                                '<div class="card">' +                                  
                                   '<figure class="front">' +
                                     '<div class="center-image">' +
                                       '<img src="'+ src +'" />' +
                                     '</div>' +
                                   '</figure>' + 
+                                  '<figure class="back"></figure>' +
                                 '</div>' +
                               '</srction>');
                   elements.push(element[0]);
@@ -159,17 +160,15 @@
           flickr.search( $('#query').val());
         });
 
-        $('#images').on('mouseenter', 'img', function(e){
+        $('#images').on('mouseenter', '.container', function(e){
           e.preventDefault();
           var $this = $(this);
-          $this.closest('div.card').addClass('flipped');
-          console.log('click', $this.html(), '*');
+          $this.find('div.card').addClass('flipped');
         });
-        $('#images').on('mouseleave', 'img', function(e){
+        $('#images').on('mouseleave', '.container', function(e){
           e.preventDefault();
           var $this = $(this);
-          $this.closest('div.card').removeClass('flipped');
-          console.log('click', $this.html(), '*');
+          $this.find('div.card').removeClass('flipped');
         });
       });
     </script> 
