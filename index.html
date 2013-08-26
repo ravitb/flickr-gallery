@@ -4,6 +4,7 @@
   <head>
     <!-- <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> -->
 
+    <link type="text/css" rel="stylesheet" href="style/normalize.css"/>
     <link type="text/css" rel="stylesheet" href="style/main.css"/>
     <style type="text/css">
       body > header {
@@ -14,6 +15,76 @@
       }
       body > header input {
         width: 100%;
+      }
+      body > section {
+      }
+      #images {
+        /*overflow: hidden;  unable to center this element, why oh why?! --> http://www.w3.org/Style/Examples/007/center.en.html*/
+        padding: 8px;
+        margin: 0 auto;
+      }
+      .container {
+        float: left;
+        position: relative;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        margin: 8px;
+        -webkit-perspective: 1000px;
+           -moz-perspective: 1000px;
+            -ms-perspective: 1000px;
+                perspective: 1000px;
+      }
+      .container .card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transform-style: preserve-3d;
+           -moz-transform-style: preserve-3d;
+             ms-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+
+        -webkit-transform:      transform 1s;
+           -moz-transform:      transform 1s;
+            -ms-transform:      transform 1s;
+                transform:      transform 1s;
+      }
+      .card figure {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility:hidden; /* Chrome and Safari */
+           -moz-backface-visibility:hidden; /* Firefox */
+            -ms-backface-visibility:hidden; /* Internet Explorer */
+                backface-visibility:hidden;
+      }
+      #card .front {
+        background: red;
+      }
+      .card .back {
+        background: #000;
+        -webkit-transform: rotateY(180deg);
+           -moz-transform: rotateY(180deg);
+            -ms-transform: rotateY(180deg);
+                transform: rotateY(180deg);
+      }
+      .card.flipped {
+        -webkit-transform: rotateY(180deg);
+           -moz-transform: rotateY(180deg);
+            -ms-transform: rotateY(180deg);
+                transform: rotateY(180deg);
+      }
+      .container .center-image {
+        display: inline-block;
+        position: relative;
+        right: -50%;
+      }
+      .container img {
+        position: relative;
+        left: -50%;
+        min-width: 200px;
+        min-height: 200px;
       }
     </style>
   </head>
@@ -51,30 +122,54 @@
           return {
 
             search: function(query){
-              var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags=dog&per_page=50",
-                  src;
+              var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags="+ query +"&per_page=10";
               $.getJSON(url + "&format=json&jsoncallback=?", function(data){
                   flickr.display(data);
               });
             },
             display: function(data){
+              var src = '',
+                  element = '', 
+                  elements = [];
               $.each(data.photos.photo, function(i,item){
                   src = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
-                  console.log(src);
-                  $("<img/>").attr("src", src).appendTo("#images");
-                  if ( i == 3 ) return false;
+                  element = $('<section class="container">' +
+                                '<div class="card">' +
+                                '<figure class="back"></figure>' +
+                                  '<figure class="front">' +
+                                    '<div class="center-image">' +
+                                      '<img src="'+ src +'" />' +
+                                    '</div>' +
+                                  '</figure>' + 
+                                '</div>' +
+                              '</srction>');
+                  elements.push(element[0]);
               });
-              console.log(data.photos.photo);
+              $('#images').empty().append(elements);
             }
           }
       })();
 
       $(function() {
+        flickr.search('dog');
         console.log('flickr', flickr);
         $('#search').on('submit', function(e){
           e.preventDefault();
-          console.log('submit', this, $('#query').val());
+          // console.log('submit', this, $('#query').val());
           flickr.search( $('#query').val());
+        });
+
+        $('#images').on('mouseenter', 'img', function(e){
+          e.preventDefault();
+          var $this = $(this);
+          $this.closest('div.card').addClass('flipped');
+          console.log('click', $this.html(), '*');
+        });
+        $('#images').on('mouseleave', 'img', function(e){
+          e.preventDefault();
+          var $this = $(this);
+          $this.closest('div.card').removeClass('flipped');
+          console.log('click', $this.html(), '*');
         });
       });
     </script> 
