@@ -5,7 +5,6 @@
     <!-- <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> -->
 
     <link type="text/css" rel="stylesheet" href="style/normalize.css"/>
-    <link type="text/css" rel="stylesheet" href="style/main.css"/>
     <style type="text/css">
       body > header {
         height: 150px;
@@ -22,13 +21,13 @@
         /*overflow: hidden;  unable to center this element, why oh why?! --> http://www.w3.org/Style/Examples/007/center.en.html*/
         padding: 8px;
         margin: 0 auto;
+        overflow: hidden;
       }
       .container {
         float: left;
         position: relative;
         width: 200px;
-        height: 200px;
-        overflow: hidden;
+        height: 260px;
         margin: 8px;
         border: 1px solid #CCC;
         -webkit-perspective: 800px;
@@ -61,6 +60,7 @@
         width: 200px;
         height: 260px;
         margin: 0;
+        overflow: hidden;
         -webkit-backface-visibility: hidden;
            -moz-backface-visibility: hidden;
              -o-backface-visibility: hidden;
@@ -85,13 +85,13 @@
         position: relative;
         left: -50%;
         min-width: 200px;
-        min-height: 200px;
+        min-height: 260px;
       }
     </style>
   </head>
   <body>
     <header>
-        <h1>Hello Feeders!</h1>
+        <h1>Hey Flickers!</h1>
         <section>
           <form id="search">
             <label for="rss-link"></label>
