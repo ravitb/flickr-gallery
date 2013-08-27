@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel> 
+<title>Sachin Tendulkar news from ESPN Cricinfo.com</title>
+<ttl>2</ttl>
+<link>http://www.espncricinfo.com</link>
+<description>Visit Cricinfo.com for up-to-the-minute cricket news, breaking cricket news, live cricket commentary, ball-by-ball commentary, cricket video, cricket audio and features.</description>
+<copyright>(c)Cricinfo</copyright>
+<language>en-gb</language>
+<image>
+<title>Sachin Tendulkar news from ESPN Cricinfo.com</title>
+<url>http://i.imgci.com/espncricinfo/espnci.png</url>
+<link>http://www.espncricinfo.com/</link>
+</image>
+<item>
+<title>Jaffer, Tendulkar centuries crush Baroda</title>
+<description>Wasim Jaffer and Sachin Tendulkar scored centuries to take Mumbai to a position of strength in the Ranji Trophy quarter-final against Baroda</description>
+ 
+<link>http://www.espncricinfo.com/ranji-trophy-2012/content/story/599938.html?CMP=OTC-RSS</link>
+ 
+<guid>http://www.espncricinfo.com/ranji-trophy-2012/content/story/599938.html</guid>
+<pubDate>Sun, 06 Jan 2013 13:40:49 GMT</pubDate>
+</item>
+<item>
+<title>Tendulkar opts out of Mumbai's crucial Ranji tie</title>
+<description>Sachin Tendulkar has decided to skip Mumbai's last Ranji Trophy league game but has made himself available for the knockout stages should the 39-times champions progress to the quarterfinals</description>
+ 
+<link>http://www.espncricinfo.com/ranji-trophy-2012/content/story/598648.html?CMP=OTC-RSS</link>
+ 
+<guid>http://www.espncricinfo.com/ranji-trophy-2012/content/story/598648.html</guid>
+<pubDate>Wed, 26 Dec 2012 11:05:11 GMT</pubDate>
+</item>
+<item>
+<title>Sachin Tendulkar retires from ODIs</title>
+<description>Sachin Tendulkar has announced his retirement from ODI cricket.  </description>
+ 
+<link>http://www.espncricinfo.com/india/content/story/598302.html?CMP=OTC-RSS</link>
+ 
+<guid>http://www.espncricinfo.com/india/content/story/598302.html</guid>
+<pubDate>Mon, 24 Dec 2012 04:27:04 GMT</pubDate>
+</item>
+//REST of the ENTRIES, See the DEMO FOR FULL XML FILE, if you are trying this tutorial, don't just copy paste this. This XML is incomplete, please see the demo section
+<item>
+<title>Tendulkar nominated to Parliament</title>
+<description>The Indian government has recommended Sachin Tendulkar's name for nomination to the Rajya Sabha, the upper house of Parliament</description>
+ 
+<link>http://www.espncricinfo.com/ci/content/story/562773.html?CMP=OTC-RSS</link>
+ 
+<guid>http://www.espncricinfo.com/ci/content/story/562773.html</guid>
+<pubDate>Fri, 27 Apr 2012 06:51:01 GMT</pubDate>
+</item>

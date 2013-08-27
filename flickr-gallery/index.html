@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/> -->
+
+    <link type="text/css" rel="stylesheet" href="style/normalize.css"/>
+    <style type="text/css">
+      body > header {
+        height: 150px;
+        background-color: #343434;
+        color: #fff;
+        padding: 25px 50px;
+      }
+      body > header input {
+        width: 100%;
+      }
+      body > section {
+      }
+      #images {
+        /*overflow: hidden;  unable to center this element, why oh why?! --> http://www.w3.org/Style/Examples/007/center.en.html*/
+        padding: 8px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      .container {
+        float: left;
+        position: relative;
+        width: 200px;
+        height: 260px;
+        margin: 8px;
+        border: 1px solid #CCC;
+        background-color: #f1f1f1;
+        -webkit-perspective: 800px;
+           -moz-perspective: 800px;
+            -ms-perspective: 800px;
+             -o-perspective: 800px;
+                perspective: 800px;
+      }
+      .container .card { 
+        -webkit-transition: -webkit-transform 0.5s;
+              -moz-transition: -moz-transform 0.5s;
+                  -o-transition: -o-transform 0.5s;
+                        transition: transform 0.5s;
+
+            -webkit-transform-style: preserve-3d;
+               -moz-transform-style: preserve-3d;
+                 -o-transform-style: preserve-3d;
+                    transform-style: preserve-3d;
+      }
+      .container .card.flipped {
+        -webkit-transform: rotateY( 180deg );
+           -moz-transform: rotateY( 180deg );
+            -ms-transform: rotateY( 180deg );
+             -o-transform: rotateY( 180deg );
+                transform: rotateY( 180deg );
+      }
+      .card figure {
+        display: block;
+        position: absolute;
+        width: 200px;
+        height: 260px;
+        margin: 0;
+        overflow: hidden;
+        -webkit-backface-visibility: hidden;
+           -moz-backface-visibility: hidden;
+             -o-backface-visibility: hidden;
+                backface-visibility: hidden;
+      }
+      .card .back {
+        background: #ffff00;
+      }
+      .card .front {
+        -webkit-transform: rotateY( 180deg );
+           -moz-transform: rotateY( 180deg );
+            -ms-transform: rotateY( 180deg );
+             -o-transform: rotateY( 180deg );
+                transform: rotateY( 180deg );
+      }
+      .container .center-image {
+        display: inline-block;
+        position: relative;
+        right: -50%;
+      }
+      .container img {
+        position: relative;
+        left: -50%;
+        min-width: 200px;
+        min-height: 260px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+        <h1>Hey Flickers!</h1>
+        <section>
+          <form id="search">
+            <label for="rss-link"></label>
+            <input type="text" id="query" name="query" value="" placeholder="It's now or never" autofocus />
+            <!-- <button>Fetch RSS!</button> -->
+          </form>
+        <section>
+    </header>
+    <nav></nav>
+    <section>
+      <div id="images"></div>
+    </section>
+    <footer></footer>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+    <script>
+      if (typeof window.jQuery) {
+          document.write('<script src="javascript/jquery-2.0.3.min.js"><\/script>');
+      }
+    </script>
+    <script type="text/javascript">
+
+      // "flickr-gallery"
+      // Key:
+      // a8ece672e0d9b4de09ea7ac9fb267a8b
+
+      // Secret:
+      // dcfb4418dfbefc7a
+      var flickr = (function(){
+          return {
+
+            search: function(query){
+              var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a8ece672e0d9b4de09ea7ac9fb267a8b&tags="+ query +"&per_page=25";
+              $.getJSON(url + "&format=json&jsoncallback=?", function(data){
+                  flickr.display(data);
+              });
+            },
+            display: function(data){
+              var src = '',
+                  element = '', 
+                  elements = [];
+              $.each(data.photos.photo, function(i,item){
+                  src = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
+                  element = $('<section class="container">' +
+                                '<div class="card">' +                                  
+                                  '<figure class="front">' +
+                                    '<div class="center-image">' +
+                                      '<img src="'+ src +'" />' +
+                                    '</div>' +
+                                  '</figure>' + 
+                                  '<figure class="back"></figure>' +
+                                '</div>' +
+                              '</srction>');
+                  elements.push(element[0]);
+              });
+              $('#images').empty().append(elements);
+            }
+          }
+      })();
+
+      $(function() {
+        flickr.search('dog');
+        console.log('flickr', flickr);
+        $('#search').on('submit', function(e){
+          e.preventDefault();
+          // console.log('submit', this, $('#query').val());
+          flickr.search( $('#query').val());
+        });
+
+        $('#images').on('mouseenter', '.container', function(e){
+          e.preventDefault();
+          var $this = $(this);
+          $this.find('div.card').addClass('flipped');
+        });
+        $('#images').on('mouseleave', '.container', function(e){
+          e.preventDefault();
+          var $this = $(this);
+          $this.find('div.card').removeClass('flipped');
+        });
+      });
+    </script> 
+  </body>
+</html>
